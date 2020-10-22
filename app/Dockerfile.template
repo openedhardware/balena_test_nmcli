@@ -1,0 +1,12 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian-node:latest-buster-build
+
+RUN apt-get update && install_packages network-manager dnsmasq wireless-tools && systemctl mask NetworkManager.service
+
+WORKDIR /usr/src/app
+
+# Install wifi-connect
+ARG BALENA_WIFI_CONNECT_VERSION="4.4.1"
+RUN curl -Ls "https://github.com/balena-io/wifi-connect/releases/download/v$BALENA_WIFI_CONNECT_VERSION/wifi-connect-v$BALENA_WIFI_CONNECT_VERSION-linux-%%BALENA_ARCH%%.tar.gz" \
+    | tar -xvz -C  /usr/src/app/
+
+CMD ["sleep", "infinity"]
